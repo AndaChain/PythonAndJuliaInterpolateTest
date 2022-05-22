@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+
 #Numpy
 import datetime
 import numpy as np
@@ -11,50 +12,30 @@ import matplotlib.pyplot as plt
 import scipy.interpolate as interpolate
 from scipy.interpolate import interp1d
 from scipy.interpolate import lagrange
-#path
-import os
-cwd = os.getcwd().replace("\\","/")
 
+from Backend import interpolate
 
 class Plot_interpolate(QWidget):
     def __init__(self): 
         #QApplication
         super().__init__()
         self.Creater()
+        
 
     def interpolate(self):
 
-        self.x = np.linspace(0, 10, num=11, endpoint=True)
-        self.y = np.cos(-self.x**2/9.0)
+        self.gettime = interpolate()
+        self.bro2.clear()                   #bro2 is Linear interpolat
+        self.bro2.append(self.gettime[0])
 
-        start_li = datetime.datetime.now() # set start time 
-        f = interp1d(self.x, self.y)
-        end_li = datetime.datetime.now()   # set end time
-        print("linear time", end_li - start_li)
-        self.bro2.clear()
-        self.bro2.append(str(end_li - start_li))
+        self.bro3.clear()                   #bro3 is Cubic interpolat
+        self.bro3.append(self.gettime[1]) 
 
-        start_cu = datetime.datetime.now() # set start time
-        f2 = interp1d(self.x, self.y, kind='cubic')
-        end_cu = datetime.datetime.now()   # set end time
-        print("cubic time",end_cu - start_cu)
-        self.bro3.clear()
-        self.bro3.append(str(end_cu - start_cu)) 
-
-        start_qu = datetime.datetime.now() # set start time 
-        f3 = interp1d(self.x, self.y, kind='quadratic')
-        end_qu = datetime.datetime.now()   # set end time 
-        print("quadratic time",end_qu - start_qu)
-        self.bro4.clear()
-        self.bro4.append(str(end_qu - start_qu))
+        self.bro4.clear()                   #bro3 is Quadratic interpolat
+        self.bro4.append(self.gettime[2])
         
-        xnew = np.linspace(0, 10, num=4001, endpoint=True)
-
-        import matplotlib.pyplot as plt
-        plt.plot(self.x, self.y, 'o', xnew, f(xnew), '-', xnew, f2(xnew), '--', xnew, f3(xnew))
-        plt.legend(['data', 'linear', 'cubic', 'quadratic'], loc='best')
-        plt.savefig('my_plot.png')
-        self.bro1.setStyleSheet(f'border-image:url({cwd}/my_plot.png);')
+        
+        self.bro1.setStyleSheet('border-image:url(C:/Users/Computer/Desktop/python/Intepolation/my_plot.png);')
 
     def Creater(self):
         self.setWindowTitle("Interpolation")
