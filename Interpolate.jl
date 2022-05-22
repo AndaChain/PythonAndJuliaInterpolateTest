@@ -43,6 +43,12 @@ function plot_graph(x, y, x_new)
     print(t3)
     println(" ns")
     
+    open("time_response.txt", "w") do io
+        write(io, "Linear,Quadratic,Cubic\n")
+        write(io, string(t1*10^-9),",",string(t2*10^-9),",",string(t3*10^-9))
+    end;
+    
+    
     scatter!(x, y, markersize=10,label="Data points")
     plot!(x_new, fx(x_new), w=3,label="Real Data") # real function graph
     
@@ -56,7 +62,8 @@ function set_graph(x,y)
     plot!(size = (width, height))
     xlims = (-4, 2)
     plot!(legend = :bottomleft)
-    savefig("D:\\Documents\\Code\\numerical\\plot2.png")
+    current_dir = pwd()*"\\plot_julia.png"
+    savefig(current_dir)
 end
 # *********************************************************
 
