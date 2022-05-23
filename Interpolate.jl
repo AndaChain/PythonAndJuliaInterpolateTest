@@ -43,7 +43,7 @@ function plot_graph(x, y, x_new)
     print(t3)
     println(" ns")
     
-    open("time_response.txt", "w") do io
+    open("time_response.csv", "w") do io
         write(io, "Linear,Quadratic,Cubic\n")
         write(io, string(t1*10^-9),",",string(t2*10^-9),",",string(t3*10^-9))
     end;
@@ -58,12 +58,13 @@ function plot_graph(x, y, x_new)
 end
 
 function set_graph(x,y)
-    width, height = 1000, 500 # width and height of canvas
+    width, height = 640, 480 # width and height of canvas
     plot!(size = (width, height))
     xlims = (-4, 2)
     plot!(legend = :bottomleft)
     current_dir = pwd()*"\\plot_julia.png"
     savefig(current_dir)
+    
 end
 # *********************************************************
 
@@ -77,5 +78,5 @@ function main(start, stop, N)
 end
 start = 1
 stop =  10
-N = 10
+N = 50000
 main(start, stop, N)
