@@ -6,14 +6,14 @@ import scipy.interpolate as interpolate
 from scipy.interpolate import interp1d
 from scipy.interpolate import lagrange
 
+from GUI_in import*
+
+
 def fx(x):
     return np.cos(-x)**2/9.0
 
-def interpolate():
+def interpolate(start,stop,step):
 
-    start = -2*np.pi
-    stop = 2*np.pi
-    step = 5000
     x = np.linspace(start, stop, num=step, endpoint=True)
     y = fx(x)
 
@@ -43,5 +43,6 @@ def interpolate():
     plt.savefig('my_plot.png')
     return [str(time_li),str(time_cubic),str(time_qu)]
 
-interpolate()
+if __name__ == "__main__":
+    interpolate(0,100,1000)
 
