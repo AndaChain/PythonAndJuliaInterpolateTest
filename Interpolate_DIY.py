@@ -5,7 +5,7 @@ from sympy import *
 
 
 def fx(x):
-    return x**3
+    return np.sin(x)
 
 class Interpolation:
     def __init__(self):
@@ -78,8 +78,8 @@ class Interpolation:
 	                    matrix_k[diagonal][diagonal - 1] = 1
 	                if diagonal + 1 < len(matrix_k[diagonal]):
 	                    matrix_k[diagonal][diagonal + 1] = 1
-	                Y = y[diagonal - 1] - 2 * y[diagonal] + y[diagonal + 1]
-	                X = 6 / (x[diagonal] - x[diagonal - 1]) ** 2
+	                Y = y[diagonal] - 2 * y[diagonal+1] + y[diagonal + 2]
+	                X = 6 / (x[diagonal+1] - x[diagonal]) ** 2
 	                matrix_y.append([X * Y])
 
         matrix_k = np.array(matrix_k)
@@ -162,8 +162,8 @@ def main():
     f4 = interp1d(x, y, kind="cubic")
 
     # -----------------------Plot------------------------------
-    plt.plot(x, y, "o", new_x, f4(new_x), "-", new_x, function_y3, "--")
-    plt.legend(["data", "AI_cubic", "cubic"], loc="best")
+    plt.plot(new_x, function_y, "-", new_x, function_y2, "-", new_x, function_y3, "--")
+    plt.legend(["linear", "quadratic", "cubic"], loc="best")
     plt.show()
 
 
