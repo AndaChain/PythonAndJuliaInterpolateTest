@@ -3,9 +3,9 @@ import csv
 
 from GUI_in import*
 
-def Julia(start,stop,step):
+def DIY(start,stop,step):
     j = julia.Julia()
-    x = j.include("Interpolate.jl")
+    x = j.include("InterpolateDIY.jl")
 
     from julia import Main
     x = Main.main(start,stop,step)
@@ -13,7 +13,7 @@ def Julia(start,stop,step):
     
 
 #def getcsv():
-    mycsv = csv.reader(open('time_response.csv'))
+    mycsv = csv.reader(open('time_DIY.csv'))
     text = []
     for row in mycsv:
         text.append(row)
@@ -23,5 +23,5 @@ def Julia(start,stop,step):
 
 
 if __name__ == "__main__":
-    Julia(1,10,500)
+    DIY(1,10,100)
     #getcsv()
