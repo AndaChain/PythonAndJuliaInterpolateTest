@@ -5,7 +5,7 @@ from GUI_in import*
 
 def DIY(start,stop,step):
     j = julia.Julia()
-    x = j.include("InterpolateDIY.jl")
+    x = j.include("Interpolate_DIY.jl")
 
     from julia import Main
     x = Main.main(start,stop,step)

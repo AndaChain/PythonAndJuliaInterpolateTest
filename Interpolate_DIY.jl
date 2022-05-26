@@ -2,7 +2,7 @@ using Plots
 using Symbolics
 # ******************* input function ******************* 
 function fx(x)
-    return @.cos(x^2/9.0)
+    return @.cos(-x)^2/9.0
 end
 # *********************************************************
 
@@ -179,9 +179,9 @@ end
 
 function set_graph()
     width, height = 640, 480 # width and height of canvas
-    plot!(size = (width, height))
-    plot!(legend = :bottomleft)
-    current_dir = pwd()*"\\plot_julia.png"
+    plot!(size = (width, height), reuse=false)
+    plot!(legend = :bottomleft, reuse=false)
+    current_dir = pwd()*"\\DIY_julia.png"
     savefig(current_dir)
     
 end
@@ -211,19 +211,59 @@ function main(start, stop, N)
     println(start,"\t",stop)
     y = fx(x)
     
-    type_of = "cubic" # change this to changing type of interpolation, There has "linear", "quadratic" and "cubic"
-    Interpo = Interpolation(x,y,type_of)
-    y_Interpo = set_x(Interpo, x_new) # use this to interpolation
+    t1_S = time_ns()
+    linear = Interpolation(x,y,"linear")
+    t1_E = time_ns()
+    if((t1_E-t1_S)*10^-9 < 0.000001)
+        t1 = "It's less than 1 us"
+    else
+        t1 = string(round((t1_E-t1_S)*10^-9, digits=6))
+    end
+    y_linear = set_x(linear, x_new) # use this to interpolation
+
+    t2_S = time_ns()
+    quadratic = Interpolation(x,y,"quadratic")
+    t2_E = time_ns()
+    if((t2_E-t2_S)*10^-9 < 0.000001)
+        t2 = "It's less than 1 us"
+    else
+        t2 = string(round((t2_E-t2_S)*10^-9, digits=6))
+    end
+    y_quadratic = set_x(quadratic, x_new) # use this to interpolation
+
+    t3_S = time_ns()
+    cubic = Interpolation(x,y,"cubic")
+    t3_E = time_ns()
+    if((t3_E-t3_S)*10^-9 < 0.000001)
+        t3 = "It's less than 1 us"
+    else
+        t3 = string(round((t3_E-t3_S)*10^-9, digits=6))
+    end
+    y_cubic = set_x(cubic, x_new) # use this to interpolation
+
+    println(t1)
+
+    println(t2)
+
+    println(t3)
+
+    open("time_DIY.csv", "w") do io
+        write(io, "Linear,Quadratic,Cubic\n")
+        write(io, t1,",",t2,",",t3)
+    end;
     
-    scatter!(x, y, markersize=10,label="Data points")
-    plot!(x_new, y_Interpo, w=3,label=type_of*" interpolation")
+    scatter(x, y, markersize=10,label="Data points")
+    plot!(x_new, y_linear, w=3,label="Linear interpolation", reuse=false)
+    plot!(x_new, y_quadratic, linestyle=:dash, w=3, label="Quadratic interpolation", reuse=false)
+    plot!(x_new, y_cubic, w=3,label="Cubic interpolation", reuse=false)
     set_graph()
+
 end
 # *********************************************************
 
 if abspath(PROGRAM_FILE) == @__FILE__
-    start = -10*pi
-    stop =  10*pi
-    N = 100
+    start = 1
+    stop =  10
+    N = 5
     main(start, stop, N)
 end
