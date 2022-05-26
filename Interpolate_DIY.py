@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import time
-=======
->>>>>>> 25179bb10f8ae3ec115524e1d338f137cf8bb2f9
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
@@ -9,11 +6,7 @@ from sympy import *
 
 
 def fx(x):
-<<<<<<< HEAD
     return np.cos(-x)**2/9.0
-=======
-    return np.sin(x)
->>>>>>> 25179bb10f8ae3ec115524e1d338f137cf8bb2f9
 
 class Interpolation:
     def __init__(self):
@@ -139,21 +132,13 @@ class Interpolation:
 	    equation_full = equation_1 - equation_2 + equation_3
 	    return equation_full
 
-<<<<<<< HEAD
 def main(start,stop,step):
    
-=======
-def main():
-    start = -2*np.pi
-    stop = 2*np.pi
-    step = 4
->>>>>>> 25179bb10f8ae3ec115524e1d338f137cf8bb2f9
     x = np.linspace(start, stop, num=step, endpoint=True)
     y = fx(x)
 
     # -----------------------linear------------------------------
     linear_interpolated = Interpolation()
-<<<<<<< HEAD
     start_li = time.time() # set start time 
     linear_interpolated.linear_function(x, y)
     end_li = time.time()   # set end time
@@ -162,16 +147,12 @@ def main():
     else:
         time_li = "{:.5f}".format(round(end_li - start_li, 6))
     print("linear time", time_li)
-=======
-    interpo = linear_interpolated.linear_function(x, y)
->>>>>>> 25179bb10f8ae3ec115524e1d338f137cf8bb2f9
 
     new_x = np.linspace(start, stop, num=step * 10, endpoint=True)
     function_y = linear_interpolated.set_function(new_x)
 
     # -----------------------quadratic------------------------------
     quadratic_interpolated = Interpolation()
-<<<<<<< HEAD
     start_qu = time.time() # set start time
     quadratic_interpolated.quadratic_function(x, y)
     end_qu = time.time()   # set end time 
@@ -207,26 +188,3 @@ def main():
 
 if __name__ == "__main__":
     main(1,10,500)
-=======
-    interpo2 = quadratic_interpolated.quadratic_function(x, y)
-
-    function_y2 = quadratic_interpolated.set_function(new_x)
-
-    f3 = interp1d(x, y, kind="quadratic")
-
-    # -----------------------cubic------------------------------
-    cubic_interpolated = Interpolation()
-    interpo3 = cubic_interpolated.cubic_function(x, y)
-
-    function_y3 = cubic_interpolated.set_function(new_x)
-
-    f4 = interp1d(x, y, kind="cubic")
-
-    # -----------------------Plot------------------------------
-    plt.plot(new_x, function_y, "-", new_x, function_y2, "-", new_x, function_y3, "--")
-    plt.legend(["linear", "quadratic", "cubic"], loc="best")
-    plt.show()
-
-
-main()
->>>>>>> 25179bb10f8ae3ec115524e1d338f137cf8bb2f9
